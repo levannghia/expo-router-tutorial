@@ -2,6 +2,7 @@
   "expo": {
     "name": "react-native-traning",
     "slug": "react-native-traning",
+    "scheme": "react-native-traning",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,7 +25,13 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "web": {
+        "bundler": "metro"
+      }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
