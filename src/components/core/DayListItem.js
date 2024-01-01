@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 50,
         color: '#9b4251',
-        fontFamily: 'Inter'
+        fontFamily: 'InterBold'
     }
 })
