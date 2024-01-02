@@ -3,7 +3,14 @@ import React, { useState } from 'react';
 import { Stack, router } from 'expo-router';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { GestureDetector, Gesture, Directions } from 'react-native-gesture-handler';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import Animated, {
+    FadeIn,
+    FadeOut,
+    BounceInRight,
+    SlideOutLeft,
+    BounceOutLeft,
+    SlideInRight,
+} from 'react-native-reanimated';
 
 const statusBarHeight = StatusBar.currentHeight;
 const onboardingSteps = [
@@ -28,42 +35,42 @@ const onboardingSteps = [
 const OnboardingScreen = () => {
     const [screenIndex, setScreenIndex] = useState(0);
     const data = onboardingSteps[screenIndex];
+
     const onContinue = () => {
         const isLastScreen = screenIndex === onboardingSteps.length - 1;
         if (isLastScreen) {
-            endOnboarding()
+            endOnboarding();
         } else {
             setScreenIndex(screenIndex + 1);
         }
-    }
+    };
 
     const onBack = () => {
         const isFirstScreen = screenIndex === 0;
         if (isFirstScreen) {
-            endOnboarding()
+            endOnboarding();
         } else {
             setScreenIndex(screenIndex - 1);
         }
-    }
+    };
 
-    function endOnboarding() {
+    const endOnboarding = () => {
         setScreenIndex(0);
         router.back();
-    }
+    };
+
     const swipeForward = Gesture.Fling().direction(Directions.LEFT)
-    // .onBegin((event) => {
-    //     console.log('begin ', event.state);
-    // })
-    .onEnd((event) => {
-        onContinue();
-    })
+        // .onBegin((event) => {
+        //     console.log('begin ', event.state);
+        // })
+        .onEnd(onContinue)
 
     const swipeBack = Gesture.Fling().direction(Directions.RIGHT)
-    .onEnd((event) => {
-        onBack();
-    })
+        .onEnd(onBack)
 
-    const swipe = Gesture.Simultaneous(swipeForward, swipeBack);
+    const swipes = Gesture.Simultaneous(
+      swipeBack, swipeForward
+    );
 
     return (
         <SafeAreaView style={styles.page}>
@@ -74,16 +81,33 @@ const OnboardingScreen = () => {
                     <View key={index} style={[styles.stepIndicator, { backgroundColor: index == screenIndex ? '#cef202' : 'gray' }]} />
                 ))}
             </View>
-            <GestureDetector gesture={swipe}>
-                <View entering={FadeIn} exiting={FadeOut} style={styles.pageContent}>
+            <GestureDetector gesture={swipes}>
+                <View style={styles.pageContent} key={screenIndex}>
                     <Animated.View entering={FadeIn} exiting={FadeOut}>
-                        <FontAwesome5 style={styles.image} name={data.icon} size={100} color="#cef202" />
+                        <FontAwesome5
+                            style={styles.image}
+                            name={data.icon}
+                            size={150}
+                            color="#CEF202"
+                        />
                     </Animated.View>
                     <View style={styles.footer}>
-                        <Text style={styles.title}>{data.title}</Text>
-                        <Text style={styles.description}>{data.description}</Text>
+                        <Animated.Text
+                            entering={SlideInRight}
+                            exiting={SlideOutLeft}
+                            style={styles.title}
+                        >
+                            {data.title}
+                        </Animated.Text>
+                        <Animated.Text
+                            entering={SlideInRight.delay(50)}
+                            exiting={SlideOutLeft}
+                            style={styles.description}
+                        >
+                            {data.description}
+                        </Animated.Text>
                         <View style={styles.buttonRow}>
-                            <Text onPress={() => endOnboarding()} style={styles.buttonText}>Skip</Text>
+                            <Text onPress={endOnboarding} style={styles.buttonText}>Skip</Text>
                             <Pressable onPress={onContinue} style={styles.button}>
                                 <Text style={styles.buttonText}>Continue</Text>
                             </Pressable>

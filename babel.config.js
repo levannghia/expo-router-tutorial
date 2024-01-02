@@ -4,7 +4,6 @@ module.exports = function (api) {
     presets: ['babel-preset-expo'],
     plugins: [
       'expo-router/babel',
-      'react-native-reanimated/plugin',
       ["module-resolver", {
         "alias": {
           "@Navigation": "./src/navigation",
@@ -20,6 +19,7 @@ module.exports = function (api) {
           ".tsx",
         ]
       }],
+      'react-native-reanimated/plugin',
     ],
   };
 };
