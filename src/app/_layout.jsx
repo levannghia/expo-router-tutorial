@@ -3,6 +3,7 @@ import { useFonts, Inter_400Regular, Inter_600SemiBold, Inter_700Bold } from '@e
 import { AmaticSC_400Regular, AmaticSC_700Bold } from '@expo-google-fonts/amatic-sc';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,14 +26,16 @@ export default function RootLayout() {
         return null;
     }
     return (
-        <Stack
-            screenOptions={{
-                headerStyle: {
-                    backgroundColor: '#F9EDE3',
-                }
-            }}
-        >
-            <Stack.Screen name="index" options={{ title: 'DEVember' }} />
-        </Stack>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <Stack
+                screenOptions={{
+                    headerStyle: {
+                        backgroundColor: '#F9EDE3',
+                    }
+                }}
+            >
+                <Stack.Screen name="index" options={{ title: 'DEVember' }} />
+            </Stack>
+        </GestureHandlerRootView>
     )
 }
