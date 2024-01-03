@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Pressable, StatusBar, Platform } from 'react-native';
 import React, { useState } from 'react';
 import { Stack, router } from 'expo-router';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     },
     stepIndicatorContainer: {
         flexDirection: 'row',
-        marginTop: statusBarHeight,
+        marginTop: Platform.OS == 'android' ? statusBarHeight : 0,
         gap: 8,
         padding: 25
     },
