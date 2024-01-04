@@ -2,9 +2,10 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Marker } from 'react-native-maps';
 
-const CustomMarker = ({apartment}) => {
+const CustomMarker = ({apartment, onPress}) => {
     return (
         <Marker
+            onPress={onPress}
             coordinate={{
                 latitude: apartment.latitude,
                 longitude: apartment.longitude,

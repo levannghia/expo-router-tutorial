@@ -34,7 +34,7 @@ export default function RootLayout() {
         return (
             <AnimatedSplashScreen
                 onAnimationFinish={(isCancelled) => {
-                    console.log(isCancelled);
+                    // console.log(isCancelled);
                     if (!isCancelled) {
                         setSplashAnimationFinished(true);
                     }
