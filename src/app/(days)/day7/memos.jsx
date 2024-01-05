@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, StyleSheet, Button, FlatList, Pressable, Text } from 'react-native';
+import { View, StyleSheet, FlatList, Pressable, Text } from 'react-native';
 import { Audio } from 'expo-av';
 import { Recording } from 'expo-av/build/Audio';
 import { Stack } from 'expo-router';
@@ -59,6 +59,7 @@ export default function MemosScreen() {
         <View style={styles.container}>
             <Stack.Screen options={{ title: 'Memos Voice' }} />
             <FlatList
+                contentContainerStyle={{paddingHorizontal: 10}}
                 data={memos}
                 renderItem={({ item }) =><MemoListItem uri={item}/>}
             />
@@ -76,7 +77,6 @@ export default function MemosScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 10,
         flex: 1,
         justifyContent: 'center',
         backgroundColor: '#ecf0f1',
