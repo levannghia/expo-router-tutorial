@@ -24,6 +24,10 @@ const MemoListItem = ({ uri }) => {
 
   const progress = position / totalDuration;
 
+  const formatMilis = (milis) => {
+    
+  }
+
   const onPlaybackStatusUpdate = useCallback(
     async (newStatus) => {
       // console.log(JSON.stringify(newStatus, null, 2));
