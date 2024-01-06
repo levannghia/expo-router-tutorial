@@ -1,15 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native';
 import dayjs from 'dayjs';
-import React from 'react'
+import React from 'react';
+import { BlurView } from 'expo-blur';
 
 const ForeCastItem = ({ forecast }) => {
     return (
-        <View style={styles.container}>
+        <BlurView intensity={30} style={styles.container}>
             <Text style={styles.temp}>{Math.round(forecast.main.temp)}°</Text>
             <Text style={styles.date}>
                 {dayjs(forecast.dt * 1000).format('ddd ha')}
             </Text>
-        </View>
+        </BlurView>
     )
 }
 
