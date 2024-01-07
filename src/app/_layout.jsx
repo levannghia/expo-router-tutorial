@@ -6,11 +6,14 @@ import React, { useEffect, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AnimatedSplashScreen from '@Components/day4/AnimatedSplashScreen';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import { AuthContext } from "../../context";
+import * as SecureStore from 'expo-secure-store'
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
     const [appReady, setAppReady] = useState(false);
+    const [user, setUser] = useState(null);
     const [splashAnimationFinished, setSplashAnimationFinished] = useState(false);
 
     let [fontsLoaded, fontError] = useFonts({
@@ -28,6 +31,14 @@ export default function RootLayout() {
         }
     }, [fontsLoaded, fontError])
 
+    useEffect(() => {
+        async function getUser() {
+            const user = await SecureStore.getItemAsync("user");
+            if (user) setUser(JSON.parse(user))
+        }
+        getUser();
+    }, [])
+
     const showAnimatedSplash = !appReady || !splashAnimationFinished;
 
     if (showAnimatedSplash) {
@@ -44,18 +55,20 @@ export default function RootLayout() {
     }
 
     return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
-            <Animated.View style={{ flex: 1 }} entering={FadeIn}>
-                <Stack
-                    screenOptions={{
-                        headerStyle: {
-                            backgroundColor: '#F9EDE3',
-                        }
-                    }}
-                >
-                    <Stack.Screen name="index" options={{ title: 'DEVember' }} />
-                </Stack>
-            </Animated.View>
-        </GestureHandlerRootView>
+        <AuthContext.Provider value={{user, setUser}}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+                <Animated.View style={{ flex: 1 }} entering={FadeIn}>
+                    <Stack
+                        screenOptions={{
+                            headerStyle: {
+                                backgroundColor: '#F9EDE3',
+                            }
+                        }}
+                    >
+                        <Stack.Screen name="index" options={{ title: 'DEVember' }} />
+                    </Stack>
+                </Animated.View>
+            </GestureHandlerRootView>
+        </AuthContext.Provider>
     )
 }
