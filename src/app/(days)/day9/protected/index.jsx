@@ -19,14 +19,15 @@ const ProtectedScreen = () => {
       });
 
       console.log(data);
-      // if(data) {
-      // }
+      if (data) {
+        setUser(null);
+        SecureStore.deleteItemAsync("user");
+      }
 
     } catch (error) {
       console.log(error.message);
     }
-    setUser(null);
-    SecureStore.deleteItemAsync("user");
+
   }
 
   return (
