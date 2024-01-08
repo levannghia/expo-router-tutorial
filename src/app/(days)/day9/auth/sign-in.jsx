@@ -22,8 +22,8 @@ const SignInScreen = () => {
             // console.log("data: ", data);
             if (data) {
                 if (data.data) {
-                    let stringUser = JSON.stringify(data.data);
-                    setUser(data.data);
+                    let stringUser = JSON.stringify(data);
+                    setUser(data);
                     SecureStore.setItemAsync("user", stringUser);
                     router.replace('/day9/protected');
                 } else if (data.message) {
