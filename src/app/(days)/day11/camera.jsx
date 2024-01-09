@@ -1,24 +1,28 @@
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
-import React, { useEffect, useCallback, useState } from 'react'
+import { StyleSheet, Text, View, ActivityIndicator, Pressable, Image, TouchableOpacity } from 'react-native'
+import React, { useEffect, useCallback, useState, useRef } from 'react'
 import { Stack, useFocusEffect } from 'expo-router'
 import { useCameraPermission, useCameraDevice, Camera } from 'react-native-vision-camera'
+import { CameraRoll } from "@react-native-camera-roll/camera-roll";
+import { FontAwesome5, Ionicons } from '@expo/vector-icons';
 
 const CameraScreen = () => {
-    const device = useCameraDevice('back')
+    const device = useCameraDevice('back', {
+        physicalDevices: ['ultra-wide-angle-camera'],
+    })
     const { hasPermission, requestPermission } = useCameraPermission()
     const [isActive, setIsActive] = useState(false)
-    // const isFocused = useIsFocused()
-    // const appState = useAppState()
-    // const isActive = isFocused && appState === "active"
+    const [photo, setPhoto] = useState(null)
+    const [flash, setFlash] = useState('off')
+    const camera = useRef(null)
 
-    useFocusEffect(() => {
+    useFocusEffect(
         useCallback(() => {
             setIsActive(true);
             return () => {
                 setIsActive(false);
             }
         }, [])
-    })
+    )
 
     useEffect(() => {
         if (!hasPermission) {
@@ -27,6 +31,19 @@ const CameraScreen = () => {
     }, [hasPermission])
 
     console.log(isActive);
+
+    const onTakePicturePressed = async () => {
+        const file = await camera.current?.takePhoto({
+            flash: flash // 'auto' | 'off'
+        });
+        const image = await CameraRoll.save(`file://${file.path}`, {
+            type: 'photo',
+        })
+        // const result = await fetch(`file://${image.path}`);
+        // const data = await result.blob();
+        console.log('photo', image);
+        setPhoto(image)
+    }
 
     if (!hasPermission) {
         return <ActivityIndicator />
@@ -38,10 +55,68 @@ const CameraScreen = () => {
         <View style={{ flex: 1 }}>
             <Stack.Screen options={{ headerShown: false }} />
             <Camera
-                // style={StyleSheet.absoluteFill}
+                ref={camera}
+                style={StyleSheet.absoluteFill}
                 device={device}
-                isActive={isActive}
+                isActive={isActive && !photo}
+                photo={true}
             />
+            {photo ?
+                (<>
+                    <Image source={{ uri: photo }} style={StyleSheet.absoluteFill} />
+                   
+                        <FontAwesome5 name="arrow-left" size={25} color="white"
+                            style={{
+                                position: 'absolute',
+                                top: 30,
+                                left: 30
+                            }}
+
+                            onPress={() => setPhoto(undefined)}
+                        />
+                    
+                </>
+                )
+                : (
+                    <>
+                        <View
+                            style={{
+                                position: 'absolute',
+                                right: 10,
+                                top: 50,
+                                padding: 10,
+                                borderRadius: 5,
+                                backgroundColor: 'rgba(0, 0, 0, 0.40)',
+                                gap: 30,
+                            }}
+                        >
+                            <TouchableOpacity>
+                                <Ionicons
+                                    name={flash === 'off' ? 'ios-flash-off' : 'ios-flash'}
+                                    onPress={() =>
+                                        setFlash((curValue) => (curValue === 'off' ? 'on' : 'off'))
+                                    }
+                                    size={30}
+                                    color="white"
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        <Pressable
+                            onPress={onTakePicturePressed}
+                            style={{
+                                position: 'absolute',
+                                alignSelf: 'center',
+                                width: 75,
+                                height: 75,
+                                backgroundColor: 'white',
+                                bottom: 50,
+                                borderRadius: 75
+                            }}
+                        >
+                        </Pressable>
+                    </>
+                )
+            }
         </View>
     )
 }
