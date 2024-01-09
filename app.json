@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "react-native-traning",
+    "name": "NativeTraning",
     "slug": "react-native-traning",
     "scheme": "react-native-traning",
     "version": "1.0.0",
@@ -44,6 +44,14 @@
         "expo-local-authentication",
         {
           "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID to unlock Secret Info."
+        }
+      ],
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera to take photo.",
+          "enableMicrophonePermission": true,
+          "microphonePermissionText": "$(PRODUCT_NAME) needs access to your Microphone."
         }
       ]
     ]

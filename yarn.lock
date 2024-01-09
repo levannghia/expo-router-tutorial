@@ -4308,7 +4308,7 @@ expo-linking@~5.0.2:
 
 expo-local-authentication@~13.4.1:
   version "13.4.1"
-  resolved "https://registry.yarnpkg.com/expo-local-authentication/-/expo-local-authentication-13.4.1.tgz#908516d395530f6895d7980009e4c85cdcff5327"
+  resolved "https://registry.npmjs.org/expo-local-authentication/-/expo-local-authentication-13.4.1.tgz"
   integrity sha512-FWTUkMNo9aDT3cg02SWAcSFjTiDu20izhCn5CGwdtFNCBpPQUD0BJ/czhjrIFE70teMzE5wZUdbJuSKYonUaWA==
   dependencies:
     invariant "^2.2.4"
@@ -7711,6 +7711,11 @@ react-native-screens@~3.22.0:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
+
+react-native-vision-camera@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-3.7.0.tgz#acec4c0491b06b02e84749a20fc112aedc75e16d"
+  integrity sha512-+QvoNXc6QPBVhJjI+uBIWOUOBuno9n+jGLDjgoqtwBkG9GBEsysTwB8ajZCo48H+MQkACmBsnNvObzzpjK6JeA==
 
 react-native-web@^0.19.10:
   version "0.19.10"

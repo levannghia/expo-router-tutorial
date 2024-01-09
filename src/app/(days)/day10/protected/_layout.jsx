@@ -1,32 +1,28 @@
 import { Slot } from "expo-router";
-import React, {useEffect, useState} from "react";
-import * as LocalAuthentication from 'expo-local-authentication';
+import React, { useEffect, useContext } from "react";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { View, Text, TouchableOpacity } from "react-native";
+import { useBiometrics } from "@Components/day10/BiometricProvider";
 
 export default function BiometricProtectedLayout() {
-    const [unlocked, setUnlocked] = useState(false);
+    const {isUnlocked, authenticate} = useBiometrics()
     useEffect(() => {
-        
-        authenticate();
+        if (!isUnlocked) {
+            authenticate();
+        }
     })
 
-    const authenticate = async () => {
-        const res = await LocalAuthentication.authenticateAsync();
-        if(res.success){
-            setUnlocked(true);
-        }
-        console.log(res);
+
+    if (!isUnlocked) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={{ fontFamily: 'Inter', fontSize: 20, marginBottom: 20 }}>Use Vân tay to Unlock</Text>
+                <TouchableOpacity onPress={authenticate}>
+                    <FontAwesome5 name="fingerprint" size={40} color="black" />
+                </TouchableOpacity>
+            </View>
+        )
     }
 
-    if(!unlocked){
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontFamily: 'Inter', fontSize: 20, marginBottom: 20}}>Use Face ID to unlock</Text>
-            <TouchableOpacity onPress={authenticate}>
-                <FontAwesome5 name="fingerprint" size={40} color="black" />
-            </TouchableOpacity>
-        </View>
-    }
-
-    return <Slot/>
+    return <Slot />
 }

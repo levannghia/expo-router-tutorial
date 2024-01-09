@@ -8,6 +8,7 @@ import AnimatedSplashScreen from '@Components/day4/AnimatedSplashScreen';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { AuthContext } from "../../context";
 import * as SecureStore from 'expo-secure-store'
+import BiometricProvider from "@Components/day10/BiometricProvider";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -55,20 +56,22 @@ export default function RootLayout() {
     }
 
     return (
-        <AuthContext.Provider value={{user, setUser}}>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-                <Animated.View style={{ flex: 1 }} entering={FadeIn}>
-                    <Stack
-                        screenOptions={{
-                            headerStyle: {
-                                backgroundColor: '#F9EDE3',
-                            }
-                        }}
-                    >
-                        <Stack.Screen name="index" options={{ title: 'DEVember' }} />
-                    </Stack>
-                </Animated.View>
-            </GestureHandlerRootView>
-        </AuthContext.Provider>
+        <BiometricProvider>
+            <AuthContext.Provider value={{ user, setUser }}>
+                <GestureHandlerRootView style={{ flex: 1 }}>
+                    <Animated.View style={{ flex: 1 }} entering={FadeIn}>
+                        <Stack
+                            screenOptions={{
+                                headerStyle: {
+                                    backgroundColor: '#F9EDE3',
+                                }
+                            }}
+                        >
+                            <Stack.Screen name="index" options={{ title: 'DEVember' }} />
+                        </Stack>
+                    </Animated.View>
+                </GestureHandlerRootView>
+            </AuthContext.Provider>
+        </BiometricProvider>
     )
 }

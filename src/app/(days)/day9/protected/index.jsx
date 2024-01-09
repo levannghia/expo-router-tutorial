@@ -22,6 +22,8 @@ const ProtectedScreen = () => {
       if (data) {
         setUser(null);
         SecureStore.deleteItemAsync("user");
+      }else{
+        return null
       }
 
     } catch (error) {
