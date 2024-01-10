@@ -39,11 +39,21 @@ const CameraScreen = () => {
         const image = await CameraRoll.save(`file://${file.path}`, {
             type: 'photo',
         })
-        // const result = await fetch(`file://${image.path}`);
-        // const data = await result.blob();
-        console.log('photo', image);
+
+        // console.log('photo', image);
         setPhoto(image)
     }
+
+    const uploadPhoto = async () => {
+        if (!photo) {
+            return;
+        }
+
+        const result = await fetch(`file://${photo.path}`);
+        const data = await result.blob();
+        console.log(data);
+        // upload data to your network storage (ex: s3, supabase storage, etc)
+    };
 
     if (!hasPermission) {
         return <ActivityIndicator />
@@ -64,17 +74,28 @@ const CameraScreen = () => {
             {photo ?
                 (<>
                     <Image source={{ uri: photo }} style={StyleSheet.absoluteFill} />
-                   
-                        <FontAwesome5 name="arrow-left" size={25} color="white"
-                            style={{
-                                position: 'absolute',
-                                top: 30,
-                                left: 30
-                            }}
+                    <FontAwesome5 name="arrow-left" size={25} color="white"
+                        style={{
+                            position: 'absolute',
+                            top: 30,
+                            left: 30
+                        }}
 
-                            onPress={() => setPhoto(undefined)}
-                        />
-                    
+                        onPress={() => setPhoto(undefined)}
+                    />
+                    <TouchableOpacity
+                        onPress={uploadPhoto}
+                        style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            paddingBottom: 50,
+                            backgroundColor: 'rgba(0, 0, 0, 0.40)',
+                        }}
+                    >
+                        <Text>Upload</Text>
+                    </TouchableOpacity>
                 </>
                 )
                 : (

@@ -1784,7 +1784,7 @@
 
 "@react-native-camera-roll/camera-roll@^7.3.0":
   version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@react-native-camera-roll/camera-roll/-/camera-roll-7.3.0.tgz#354765d61e9175e8708404c1bb3fb4d2e7c99071"
+  resolved "https://registry.npmjs.org/@react-native-camera-roll/camera-roll/-/camera-roll-7.3.0.tgz"
   integrity sha512-OjLk+/fnYIKaBvPo85aMNkE9o1EsDsTodT29izy9U5gia66ETfQJV3MTWCrjCH7uhsMvfVDK1sAEeibHWJz/IQ==
 
 "@react-native-community/cli-clean@11.3.7":
@@ -4325,7 +4325,7 @@ expo-location@~16.1.0:
 
 expo-media-library@~15.4.1:
   version "15.4.1"
-  resolved "https://registry.yarnpkg.com/expo-media-library/-/expo-media-library-15.4.1.tgz#577efb13d912e28e9c3fcc5022156e204a59b7e8"
+  resolved "https://registry.npmjs.org/expo-media-library/-/expo-media-library-15.4.1.tgz"
   integrity sha512-lpWcT4pynWcE7TyNMUkLFH4YcueCTnq7UOJYRR0vewPEJeQXwRscka7zBtrhA+RSsJda013Q0615K+5lRLt14Q==
 
 expo-modules-autolinking@1.5.1:

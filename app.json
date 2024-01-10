@@ -30,7 +30,12 @@
         "android.permission.USE_BIOMETRIC",
         "android.permission.USE_FINGERPRINT"
       ],
-      "package": "com.meoem2712.reactnativetraning"
+      "package": "com.meoem2712.reactnativetraning",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png",
