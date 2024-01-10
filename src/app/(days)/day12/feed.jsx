@@ -1,4 +1,4 @@
-import { StyleSheet,View, FlatList, StatusBar } from 'react-native'
+import { StyleSheet, View, FlatList, StatusBar } from 'react-native'
 import React, { useState, useEffect, useRef } from 'react'
 import { Stack } from 'expo-router'
 import VideoPost from '@Components/day12/VideoPost';
@@ -51,14 +51,19 @@ const FeedScreen = () => {
 
     const viewabilityConfigCallbackPairs = useRef([
         {
-          viewabilityConfig: { itemVisiblePercentThreshold: 50 },
-          onViewableItemsChanged: ({ changed, viewableItems }) => {
-            if (viewableItems.length > 0 && viewableItems[0].isViewable) {
-              setActivePostId(viewableItems[0].item.id);
-            }
-          },
+            viewabilityConfig: { itemVisiblePercentThreshold: 50 },
+            onViewableItemsChanged: ({ changed, viewableItems }) => {
+                if (viewableItems.length > 0 && viewableItems[0].isViewable) {
+                    setActivePostId(viewableItems[0].item.id);
+                }
+            },
         },
-      ]);
+    ]);
+
+    const onEndReached = () => {
+        // fetch more posts from database
+        setPosts((currentPosts) => [...currentPosts, ...dummyPosts]);
+    };
 
     return (
         <View style={styles.container}>
@@ -68,12 +73,13 @@ const FeedScreen = () => {
                 viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
                 showsVerticalScrollIndicator={false}
                 data={posts}
-                keyExtractor={(item, index) => item.id}
+                keyExtractor={(item, index) => `${item.id}-${index}`}
                 renderItem={({ item }) => (
-                    <VideoPost post={item} activePostId={activePostId}/>
+                    <VideoPost post={item} activePostId={activePostId} />
                 )}
                 pagingEnabled
-                
+                onEndReached={onEndReached}
+                onEndReachedThreshold={3}
             />
         </View>
     )

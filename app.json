@@ -56,7 +56,8 @@
         {
           "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera to take photo.",
           "enableMicrophonePermission": true,
-          "microphonePermissionText": "$(PRODUCT_NAME) needs access to your Microphone."
+          "microphonePermissionText": "$(PRODUCT_NAME) needs access to your Microphone.",
+          "enableCodeScanner": true
         }
       ],
       [

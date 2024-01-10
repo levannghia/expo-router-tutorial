@@ -15,7 +15,7 @@ const DayDetailsScreen = () => {
 
       <MarkdownDisplay>{description}</MarkdownDisplay>
 
-      <Link href="/day12/feed1" asChild>
+      <Link href="/day12/feed" asChild>
         <Button title="Go to Feed" />
       </Link>
     </SafeAreaView>
