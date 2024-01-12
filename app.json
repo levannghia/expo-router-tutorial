@@ -12,6 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "googleMapsApiKey": "AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o",
     "assetBundlePatterns": [
       "**/*"
     ],

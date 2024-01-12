@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Button } from 'react-native'
 import React from 'react'
 import * as Notifications from 'expo-notifications';
 
@@ -19,9 +19,9 @@ export default function NotificationScreen() {
 async function schedulePushNotification() {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "You've got mail! 📬",
+      title: "Checkout the new Tinder! 📬",
       body: 'Here is the notification body',
-      data: { data: 'goes here' },
+      data: { data: 'goes here', url: '/day6' },
     },
     trigger: { seconds: 10 },
   });
