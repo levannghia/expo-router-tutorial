@@ -5,18 +5,18 @@ import MarkdownDisplay from '@Components/day3/MarkdownDisplay';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const description = `
-# Push Notifications
-Send and Receive Push Notifications`;
+# Todo app
+Ultimate Todo app`;
 
 const DayDetailsScreen = () => {
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1 }}>
-      <Stack.Screen options={{ title: 'Day 14: Notifications' }} />
+      <Stack.Screen options={{ title: 'Day 15: Todo' }} />
 
       <MarkdownDisplay>{description}</MarkdownDisplay>
 
-      <Link href="/day14/notifications" asChild>
-        <Button title="Go to Notifications" />
+      <Link href="/day15/todo" asChild>
+        <Button title="Go to TODO" />
       </Link>
     </SafeAreaView>
   );
