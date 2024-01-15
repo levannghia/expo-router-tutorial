@@ -1,4 +1,4 @@
-import { FlatList, Pressable, StyleSheet, Text, TextInput, View, KeyboardAvoidingView, } from 'react-native'
+import { FlatList, Pressable, StyleSheet, Text, View, KeyboardAvoidingView, StatusBar, Platform} from 'react-native'
 import React, { useState } from 'react'
 import { Stack } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -28,6 +28,8 @@ const dummyTasks = [
     },
 ];
 
+const currentHeightBar = StatusBar.currentHeight;
+
 const TodoScreen = () => {
     const [tasks, setTasks] = useState(dummyTasks)
 
@@ -39,13 +41,13 @@ const TodoScreen = () => {
         });
     }
     return (
-        < KeyboardAvoidingView
+        <KeyboardAvoidingView
             style={styles.page}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <Stack.Screen options={{ title: 'TODO' }} />
             <SafeAreaView
                 edges={['bottom']}
-                style={{ flex: 1 }}
+                style={{ flex: 1, paddingTop: Platform.OS === 'android' ? currentHeightBar : 0}}
             >
                 <FlatList
                     data={tasks}
