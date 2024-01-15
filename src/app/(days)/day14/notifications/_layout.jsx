@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, Platform } from 'react-native'
+import { StyleSheet, Text, View, Platform, Alert } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
 import { Slot, router } from 'expo-router'
 import { AntDesign } from '@expo/vector-icons';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -119,7 +120,11 @@ async function registerForPushNotificationsAsync() {
     }
     // Learn more about projectId:
     // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
-    token = (await Notifications.getExpoPushTokenAsync({ projectId: 'your-project-id' })).data;
+    if(!Constants.expoConfig.extra.eas.projectId){
+      Alert.alert('No ProjectId found in app.json');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync({ projectId: Constants.expoConfig.extra.eas.projectId })).data;
     console.log(token);
   } else {
     alert('Must use physical device for Push Notifications');

@@ -4,6 +4,7 @@ import { Stack } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import NewsTaskInput from '@Components/day15/NewsTaskInput';
+import TaskListItem from '@Components/day15/TaskListItem';
 
 const dummyTasks = [
     {
@@ -54,14 +55,7 @@ const TodoScreen = () => {
                     keyExtractor={(item, index) => index}
                     contentContainerStyle={{ gap: 5, padding: 10 }}
                     renderItem={({ item, index }) => (
-                        <Pressable onPress={() => onItemPressed(index)} style={styles.taskContainer}>
-                            <MaterialCommunityIcons
-                                name={item.isFinished ? 'checkbox-marked-circle-outline' : 'checkbox-blank-circle-outline'}
-                                size={24}
-                                color="dimgray"
-                            />
-                            <Text style={[styles.taskTitle, { textDecorationLine: item.isFinished ? 'line-through' : 'none' }]}>{item.title}</Text>
-                        </Pressable>
+                        <TaskListItem task={item} onItemPressed={() => onItemPressed(index)}/>
                     )}
                     ListFooterComponent={() =>
                         <NewsTaskInput onAdd={(newTodo) => setTasks(currentTasks => [...currentTasks, newTodo])} />
@@ -79,18 +73,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         flex: 1,
     },
-    taskContainer: {
-        padding: 5,
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
-    },
-    taskTitle: {
-        fontFamily: 'InterSemi',
-        fontSize: 15,
-        color: 'dimgray',
-        flex: 1,
-    },
+
     input: {
         fontFamily: 'InterSemi',
         color: 'dimgray',
