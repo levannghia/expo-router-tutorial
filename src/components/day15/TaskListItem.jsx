@@ -1,22 +1,44 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable, Animated } from 'react-native'
 import React from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+// import Animated, { useAnimatedStyle, interpolate } from 'react-native-reanimated';
 
-const TaskListItem = ({ task, onItemPressed }) => {
+const AnimatedView = Animated.createAnimatedComponent(View);
+const RightActions = ({ dragAnimatedValue, onDelete }) => {
+    const animatedStyles = {
+        transform: [
+            {
+                translateX: dragAnimatedValue.interpolate({
+                    inputRange: [-40, 0],
+                    outputRange: [0, 40],
+                    extrapolate: 'clamp',
+                }),
+            },
+        ],
+    };
+
+    return (
+        <AnimatedView
+            style={[
+                {
+                    backgroundColor: 'crimson',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingHorizontal: 10,
+                },
+                animatedStyles
+            ]}
+        >
+            <MaterialCommunityIcons onPress={onDelete} name={'delete'} size={24} color={'white'} />
+        </AnimatedView>
+    )
+}
+
+const TaskListItem = ({ task, onItemPressed, onDelete }) => {
     return (
         <Swipeable
-            renderRightActions={() => (
-                <View
-                    style={{
-                        backgroundColor: 'crimson',
-                        flexDirection: 'row',
-                        alignItems: 'center'
-                    }}
-                >
-                    <MaterialCommunityIcons name={'delete'} size={24} color={'white'} />
-                </View>
-            )}
+            renderRightActions={(progressAnimatedValue, dragAnimatedValue) => <RightActions dragAnimatedValue={dragAnimatedValue} onDelete={onDelete}/>}
         >
             <Pressable onPress={onItemPressed} style={styles.taskContainer}>
                 <MaterialCommunityIcons

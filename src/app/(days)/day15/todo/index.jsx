@@ -1,10 +1,11 @@
-import { FlatList, Pressable, StyleSheet, Text, View, KeyboardAvoidingView, StatusBar, Platform} from 'react-native'
+import { FlatList, Pressable, StyleSheet, Text, View, KeyboardAvoidingView, StatusBar, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { Stack } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import NewsTaskInput from '@Components/day15/NewsTaskInput';
 import TaskListItem from '@Components/day15/TaskListItem';
+import Reanimated, { CurvedTransition } from 'react-native-reanimated';
 
 const dummyTasks = [
     {
@@ -41,21 +42,39 @@ const TodoScreen = () => {
             return updatedTast;
         });
     }
+
+    const deleteTask = (index) => {
+        setTasks((currentTasks) => {
+            const updatedTast = [...currentTasks];
+            updatedTast.splice(index, 1);
+            return updatedTast;
+        })
+    }
     return (
         <KeyboardAvoidingView
             style={styles.page}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            <Stack.Screen options={{ title: 'TODO' }} />
+            <Stack.Screen options={{
+                title: 'Todo',
+                headerBackTitleVisible: false,
+                headerSearchBarOptions: {
+                    hideWhenScrolling: true,
+                    onChangeText: (e) => setSearchQuery(e.nativeEvent.text),
+                },
+            }}
+            />
             <SafeAreaView
                 edges={['bottom']}
-                style={{ flex: 1, paddingTop: Platform.OS === 'android' ? currentHeightBar : 0}}
+                style={{ flex: 1, paddingTop: Platform.OS === 'android' ? currentHeightBar : 0 }}
             >
                 <FlatList
                     data={tasks}
                     keyExtractor={(item, index) => index}
                     contentContainerStyle={{ gap: 5, padding: 10 }}
                     renderItem={({ item, index }) => (
-                        <TaskListItem task={item} onItemPressed={() => onItemPressed(index)}/>
+                        <Reanimated.View layout={CurvedTransition}>
+                            <TaskListItem task={item} onItemPressed={() => onItemPressed(index)} onDelete={deleteTask} />
+                        </Reanimated.View>
                     )}
                     ListFooterComponent={() =>
                         <NewsTaskInput onAdd={(newTodo) => setTasks(currentTasks => [...currentTasks, newTodo])} />
