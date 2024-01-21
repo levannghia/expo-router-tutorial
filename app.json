@@ -50,7 +50,8 @@
     "web": {
       "favicon": "./assets/favicon.png",
       "web": {
-        "bundler": "metro"
+        "bundler": "metro",
+        "output": "server"
       }
     },
     "plugins": [

@@ -55,12 +55,13 @@ const TodoScreen = () => {
             style={styles.page}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <Stack.Screen options={{
-                title: 'Todo',
-                headerBackTitleVisible: false,
+                // title: 'Todo',
+                // headerBackTitleVisible: false,
                 headerSearchBarOptions: {
                     hideWhenScrolling: true,
                     onChangeText: (e) => setSearchQuery(e.nativeEvent.text),
                 },
+                headerShown: false,
             }}
             />
             <SafeAreaView
@@ -70,7 +71,7 @@ const TodoScreen = () => {
                 <FlatList
                     data={tasks}
                     keyExtractor={(item, index) => index}
-                    contentContainerStyle={{ gap: 5, padding: 10 }}
+                    contentContainerStyle={{ gap: 5, padding: 10}}
                     renderItem={({ item, index }) => (
                         <Reanimated.View layout={CurvedTransition}>
                             <TaskListItem task={item} onItemPressed={() => onItemPressed(index)} onDelete={deleteTask} />
